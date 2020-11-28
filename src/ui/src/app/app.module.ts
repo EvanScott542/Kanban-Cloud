@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
+import { jqxButtonModule } from 'jqwidgets-ng/jqxbuttons';
+import { jqxKanbanModule } from 'jqwidgets-ng/jqxkanban';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -11,7 +11,8 @@ import { AppComponent } from './app.component';
     imports: [
       BrowserModule,
       AppRoutingModule,
-      jqxGridModule
+      jqxButtonModule,
+      jqxKanbanModule
     ],
     bootstrap: [ AppComponent ],
 	entryComponents: [ AppComponent ]

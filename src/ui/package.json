@@ -20,7 +20,10 @@
     "@angular/platform-browser": "~10.2.0",
     "@angular/platform-browser-dynamic": "~10.2.0",
     "@angular/router": "~10.2.0",
-    "jqwidgets-ng": "^10.1.6",
+    "install": "^0.13.0",
+    "jqwidgets-ng": "^11.0.0",
+    "jqwidgets-scripts": "^11.0.0",
+    "npm": "^6.14.8",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
