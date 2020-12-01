@@ -1,9 +1,33 @@
-<jqxKanban [theme]="'material'" #myKanban
-    [width]="getWidth()" [height]="500" [source]="dataAdapter"
-    [columns]="columns" [resources]="resourcesAdapterFunc()">
-</jqxKanban>
+<div class="row">
+    <h1>CMSC 491 - Semester Project</h1>
+    <div class="column">
+        <jqxKanban #myKanban 
+            [width]="'100%'" [height]="'100%'" [source]="dataAdapter" [theme]="'light'" 
+            [columns]="columns">
+        </jqxKanban>
+    </div>
+    <div class="column">
+        <div class="container">
+            <div *ngIf="!submitted">
+              <h1>New Card</h1>
+              <form [formGroup]="newCardForm" (ngSubmit)="onSubmit(newCardForm.value)">
+
+                <div>
+                  <label for="name">
+                    Task Name
+                  </label>
+                  <input id="name" type="text" formControlName="name">
+                </div>
+              
+                <button class="button" type="submit">Create</button>
+              
+              </form>
+              
+            </div>
+          
+          </div>
+    </div>
+</div>
 
 <br />
-
-<jqxButton [theme]="'material'" #myRemoveItemBtn (onClick)="removeItemBtnOnClick()">Remove all</jqxButton>
-<jqxButton [theme]="'material'" #myRemoveItemBtn (onClick)="removeItemBtnOnClick()">Add Card</jqxButton>
+<jqxButton [theme]="'material'" (onClick)="addCard()">Add Card</jqxButton>

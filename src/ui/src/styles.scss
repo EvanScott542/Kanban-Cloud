@@ -2,3 +2,16 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.column {
+    float: left !important;
+    width: 50% !important;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "" !important;
+    display: table !important;
+    clear: both !important;
+  }

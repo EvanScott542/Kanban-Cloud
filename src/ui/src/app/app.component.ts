@@ -1,7 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { jqxKanbanComponent } from 'jqwidgets-ng/jqxkanban';
 import { jqxButtonComponent } from 'jqwidgets-ng/jqxbuttons'
+import { KanbanService } from './services/kanban.service';
+import { NewCardComponent } from './new-card/new-card.component';
+import { FormBuilder } from '@angular/forms';
 
 
 @Component({
@@ -9,19 +12,34 @@ import { jqxButtonComponent } from 'jqwidgets-ng/jqxbuttons'
   templateUrl: './app.component.html'
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   @ViewChild('myKanban') myKanban: jqxKanbanComponent;
   @ViewChild('myRemoveItemBtn') myRemoveItemBtn: jqxButtonComponent;
+  
+  newCardForm;
+  idx: number = 9034;
 
   fields: any[] =
     [
       { name: 'id', type: 'string' },
       { name: 'status', map: 'state', type: 'string' },
-      { name: 'text', map: 'label', type: 'string' },
-      { name: 'tags', type: 'string' },
-      { name: 'color', map: 'hex', type: 'string' },
-      { name: 'resourceId', type: 'number' }
+      { name: 'text', map: 'label', type: 'string' }
     ];
+
+    form: any;
+    submitted: boolean = false;
+
+  constructor(private kanbanService: KanbanService,  private formBuilder: FormBuilder) {
+    this.newCardForm = this.formBuilder.group({
+      name: ''
+    });
+  }
+
+  ngOnInit () {
+    this.kanbanService.getCards().subscribe(x => {
+      console.log("data: ", x)
+    });
+  }
 
   getWidth(): any {
     if (document.body.offsetWidth < 600) {
@@ -34,24 +52,14 @@ export class AppComponent {
   source: any =
     {
       localData: [
-        { id: '1161', state: 'new', label: 'Combine Orders', tags: 'orders, combine', hex: '#5dc3f0', resourceId: 3 },
-        { id: '1645', state: 'work', label: 'Change Billing Address', tags: 'billing', hex: '#f19b60', resourceId: 1 },
-        { id: '9213', state: 'new', label: 'One item added to the cart', tags: 'cart', hex: '#5dc3f0', resourceId: 3 },
-        { id: '6546', state: 'done', label: 'Edit Item Price', tags: 'price, edit', hex: '#5dc3f0', resourceId: 4 },
-        { id: '9034', state: 'new', label: 'Login 404 issue', tags: 'issue, login', hex: '#6bbd49' }
-      ],
-      dataType: 'array',
-      dataFields: this.fields
-    };
-
-  source2: any =
-    {
-      localData: [
-        { id: '1162', state: 'new', label: 'New issue', tags: 'orders, combine', hex: '#5dc3f0' },
-        { id: '1646', state: 'work', label: 'NEw issue 2', tags: 'billing', hex: '#f19b60' },
-        { id: '9214', state: 'new', label: 'New issue 3', tags: 'cart', hex: '#5dc3f0' },
-        { id: '6547', state: 'done', label: 'New issue 4', tags: 'price, edit', hex: '#5dc3f0', resourceId: 4 },
-        { id: '9035', state: 'new', label: 'New issue 5', tags: 'issue, login', hex: '#6bbd49' }
+        { id: '1161', state: 'new', label: 'Project Proposal', tags: 'Task', hex: '#5dc3f0', resourceId: 1 },
+        { id: '1645', state: 'new', label: 'Create GitHub Repo', tags: 'Task', hex: '#f19b60', resourceId: 1 },
+        { id: '2213', state: 'new', label: 'Start Coding', tags: 'Task', hex: '#5dc3f0', resourceId: 3 },
+        { id: '6546', state: 'new', label: 'Intermediate Report', tags: 'Task', hex: '#5dc3f0', resourceId: 4 },
+        { id: '9034', state: 'new', label: 'Presentation', tags: 'Task', hex: '#6bbd49' },
+        { id: '9234', state: 'new', label: 'Add Card Feature', tags: 'Task', hex: '#6bbd49' },
+        { id: '9334', state: 'new', label: 'Create Project Feature', tags: 'Task', hex: '#6bbd49' },
+        { id: '9434', state: 'new', label: 'Share Project Feature', tags: 'Task', hex: '#6bbd49' }
       ],
       dataType: 'array',
       dataFields: this.fields
@@ -62,30 +70,32 @@ export class AppComponent {
 
   resourcesAdapterFunc = (): any => {
     let resourcesSource =
-    {
-      localData: [
-        { id: 0, name: 'No name', image: 'https://www.jqwidgets.com/angular/jqwidgets/styles/images/common.png', common: true },
-        { id: 1, name: 'Andrew Fuller', image: 'https://www.jqwidgets.com/angular/images/andrew.png' },
-        { id: 2, name: 'Janet Leverling', image: 'https://www.jqwidgets.com/angular/images/janet.png' },
-        { id: 3, name: 'Steven Buchanan', image: 'https://www.jqwidgets.com/angular/images/steven.png' },
-        { id: 4, name: 'Nancy Davolio', image: 'https://www.jqwidgets.com/angular/images/nancy.png' },
-        { id: 5, name: 'Michael Buchanan', image: 'https://www.jqwidgets.com/angular/images/Michael.png' },
-        { id: 6, name: 'Margaret Buchanan', image: 'https://www.jqwidgets.com/angular/images/margaret.png' },
-        { id: 7, name: 'Robert Buchanan', image: 'https://www.jqwidgets.com/angular/images/robert.png' },
-        { id: 8, name: 'Laura Buchanan', image: 'https://www.jqwidgets.com/angular/images/Laura.png' },
-        { id: 9, name: 'Laura Buchanan', image: 'https://www.jqwidgets.com/angular/images/Anne.png' }
-      ],
-      dataType: 'array',
-      dataFields: [
-        { name: 'id', type: 'number' },
-        { name: 'name', type: 'string' },
-        { name: 'image', type: 'string' },
-        { name: 'common', type: 'boolean' }
-      ]
-    };
+        {
+            localData:
+            [
+                { id: 0, name: 'No name', image: '../jqwidgets/styles/images/common.png', common: true },
+                { id: 1, name: 'Andrew Fuller', image: '../images/andrew.png' },
+                { id: 2, name: 'Janet Leverling', image: '../images/janet.png' },
+                { id: 3, name: 'Steven Buchanan', image: '../images/steven.png' },
+                { id: 4, name: 'Nancy Davolio', image: '../images/nancy.png' },
+                { id: 5, name: 'Michael Buchanan', image: '../images/Michael.png' },
+                { id: 6, name: 'Margaret Buchanan', image: '../images/margaret.png' },
+                { id: 7, name: 'Robert Buchanan', image: '../images/robert.png' },
+                { id: 8, name: 'Laura Buchanan', image: '../images/Laura.png' },
+                { id: 9, name: 'Laura Buchanan', image: '../images/Anne.png' }
+            ],
+            dataType: 'array',
+            dataFields:
+            [
+                { name: 'id', type: 'number' },
+                { name: 'name', type: 'string' },
+                { name: 'image', type: 'string' },
+                { name: 'common', type: 'boolean' }
+            ]
+        };
     let resourcesDataAdapter = new jqx.dataAdapter(resourcesSource);
     return resourcesDataAdapter;
-  }
+}
 
   columns: any[] =
     [
@@ -105,5 +115,25 @@ export class AppComponent {
     this.source.localData.forEach((element: object) => {
       this.myKanban.removeItem(element['id']);
     })
+  }
+
+  onSubmit(data)  {
+    this.submitted = true;
+    this.newCardForm.reset();
+    // this._removeAllContent();
+    let colors = ['#f19b60', '#5dc3f0', '#6bbd49', '#dddddd'];
+    this.myKanban.addItem({
+      status: 'new',
+      label: data,
+      tags: 'new',
+      resourceId: null
+    });    
+    // this.source['localData'].push({id: '9034', state: 'new', label: 'Login 404 issue', tags: 'issue, login', hex: '#6bbd49'})
+    // this.ngOnInit()
+    debugger
+  }
+
+  addCard() {
+    this.submitted = false;
   }
 }
