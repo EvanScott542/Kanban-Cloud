@@ -1,10 +1,9 @@
 <div class="row">
-    <h1>CMSC 491 - Semester Project</h1>
+    <h1>Kanban Cloud</h1>
     <div class="column">
-        <jqxKanban #myKanban 
-            [width]="'100%'" [height]="'100%'" [source]="dataAdapter" [theme]="'light'" 
-            [columns]="columns">
-        </jqxKanban>
+      <jqxKanban #kanban [width]="getWidth()" [height]="500" [source]="dataAdapter" [columns]="columns" [resources]="resourcesAdapterFunc()"></jqxKanban>
+      <br />
+      <jqxButton *ngIf="submitted" (onClick)="addItemBtnOnClick()">Add Item</jqxButton>
     </div>
     <div class="column">
         <div class="container">
@@ -18,6 +17,13 @@
                   </label>
                   <input id="name" type="text" formControlName="name">
                 </div>
+                <br />
+                <div>
+                  <label for="tag">
+                    Tag
+                  </label>
+                  <input id="tag" type="text" formControlName="tag">
+                </div>
               
                 <button class="button" type="submit">Create</button>
               
@@ -30,4 +36,3 @@
 </div>
 
 <br />
-<jqxButton [theme]="'material'" (onClick)="addCard()">Add Card</jqxButton>

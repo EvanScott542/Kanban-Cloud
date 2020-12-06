@@ -22,4 +22,4 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
 class CardSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Card
-        fields = ['state', 'label', 'prj']
+        fields = ['state', 'label', 'prj_id']
