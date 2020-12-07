@@ -17,8 +17,8 @@ export class KanbanService {
       this.httpClient.post('http://127.0.0.1:8000/cards/', data);
     }
 
-    updateCard(id: number) {
-      // this.httpClient.put('http://127.0.0.1:8000/cards/{\$}')
+    updateCard(id: number, data) {
+      this.httpClient.put(`http://127.0.0.1:8000/cards/${id}`, data)
     }
     
 }
